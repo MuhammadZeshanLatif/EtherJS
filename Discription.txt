@@ -1,0 +1,29 @@
+Befor starting we need to kno somw term
+  1)Provider:- If we want to read any data from block chain we use provider..
+  2)
+ install Ether.js library by command
+npm install --save ethers
+
+const balance = await provider.getBalance(address); // Get the Ether balance of an address
+
+// Properties
+const network = provider.network; // Information about the connected Ethereum network
+const providerUrl = provider.providerUrl; // The URL of the Ethereum JSON-RPC provider
+const apiKey = provider.apiKey; // The API key used for authentication (if applicable)
+
+// Methods (for Ethereum JSON-RPC calls)
+const block = await provider.getBlock(blockNumberOrHash); // Get a specific block by number or hash
+const transaction = await provider.getTransaction(transactionHash); // Get a transaction by its hash
+const receipt = await provider.getTransactionReceipt(transactionHash); // Get the receipt of a transaction
+const logs = await provider.getLogs(filter); // Get Ethereum logs matching filter criteria
+const etherPrice = await provider.getEtherPrice(currency); // Get the current Ether price in a specific currency
+const gasPrice = await provider.getGasPrice(); // Get the current gas price in Wei
+
+// Ethereum Transaction Methods
+const transactionResponse = await provider.sendTransaction(transactionRequest); // Send an Ethereum transaction
+const currentBlockNumber = await provider.getBlockNumber(); // Get the current block number
+const nonce = await provider.getTransactionCount(address); // Get the nonce (transaction count) of an address
+const gasEstimate = await provider.estimateGas(transactionRequest); // Estimate gas cost of a transaction
+const contractBytecode = await provider.getCode(contractAddress); // Get bytecode of a deployed contract
+const storageValue = await provider.getStorageAt(address, position); // Get storage value at a position
+const contractCallResult = await provider.call(transactionRequest, blockNumberOrHash); // Call a contract function without sending a transaction
