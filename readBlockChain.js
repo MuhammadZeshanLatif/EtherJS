@@ -14,8 +14,7 @@
 //     console.log("Blance is ",ethers.formatEther(balance),"ETH");
 // }
 // getBalance();
-
-// const { ethers } = require("ethers");
+//  const { ethers } = require("ethers");
 // const providers = new ethers.JsonRpcProvider("https://mainnet.infura.io/v3/d6b7c4625a424f51a9d2c7a45d6024b1");
 // const networkInfo = async () => {
 //     try {
@@ -30,5 +29,15 @@
 
 // }
 // networkInfo();
+// import { ethers } from 'https://cdn.ethers.io/lib/ethers-5.0.umd.min.js';
+
+// const provider = new ethers.JsonRpcProvider('https://sepolia.infura.io/v3/d6b7c4625a424f51a9d2c7a45d6024b1');
+// setInterval(function () {
+//     provider.getBlockNumber().then(data => {
+//         document.getElementById('blockNumber').innerHTML = data;
+//     });
+// }, 3000);
+
+
 
 
