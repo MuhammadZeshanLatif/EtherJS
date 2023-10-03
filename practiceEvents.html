@@ -1,0 +1,107 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+</head>
+
+<body>
+
+</body>
+<script>
+    let contractAddress = "0x147982Fec6D3dA8abEd682E32906e1F359D403F5";
+    let contractAbi = [
+        {
+            "inputs": [],
+            "name": "receiveBalance",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "address",
+                    "name": "receiverAddress",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "recieverName",
+                    "type": "string"
+                }
+            ],
+            "name": "receiverRecord",
+            "type": "event"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "userAddre",
+                    "type": "address"
+                },
+                {
+                    "internalType": "string",
+                    "name": "names",
+                    "type": "string"
+                }
+            ],
+            "name": "transferBalance",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "name",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "showContractBalance",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ]
+    if (window.ethereum) {
+        let provider= new ethers.providers.Web3Provider(window.ethereum);
+        let fun=async ()=>{
+           let req = await provider.send("eth_requestAccounts",[]);
+           let signer= provider.getSigner();
+           let contract = new ethers.Contract(contractAddress,contractAbi,signer);
+          // let balance=await contract.receiveBalance({value:ethers.utils.parseEther("0.000000000012")});
+           //let balance=await contract.transferBalance("0xcE2a59bB722c17c555D52dcD8ea40E32e1E6Cd55",{value:ethers.utils.parseEther("0.000000000012")});
+          //let balance = await contract.showContractBalance();
+          let eve=await contract.queryFilter("receiverRecord")
+           console.log(eve);
+        }
+        fun();
+        
+    }
+    else {
+        console.log("Install MetaMask");
+    }
+</script>
+
+</html>

@@ -1,0 +1,30 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script type="application/javascript">
+    const provider = new ethers.providers.JsonRpcProvider("https://sepolia.infura.io/v3/d6b7c4625a424f51a9d2c7a45d6024b1");
+    const networkInfo = async () => {
+        try {
+
+            const _networkInfo = await provider.getNetwork();
+            console.log(_networkInfo.toJSON());
+            console.log(_networkInfo.name)
+            console.log(_networkInfo.chainId)
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
+    networkInfo()
+</script>
+
+</html>

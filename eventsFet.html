@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventsGet</title>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+</head>
+
+<body>
+    <!-- Add content here if needed -->
+    <script>
+        const contractAddress = '0xa71e17634F687e1fCe0C7831BBBa762dfBCF7767';
+        const contractABI = [
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "adress",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "nam",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "age",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "chaceEv",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "internalType": "address",
+                        "name": "_addr",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "uint256",
+                        "name": "Val",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "checkEvents",
+                "type": "event"
+            }
+        ];
+
+        const cmnd = window.ethereum;
+
+        if (cmnd) {
+            const fun = async () => {
+                try {
+                    const provider = new ethers.providers.Web3Provider(cmnd);
+                    await provider.send("eth_requestAccounts", []);
+                    const signer = provider.getSigner();
+                    const contract = new ethers.Contract(contractAddress, contractABI, signer);
+                    // const block=contract.getBlockNumber();
+                    // console.log(block)
+                    const filter = await contract.queryFilter('checkEvents');
+                    console.log(filter);
+                    filter.map(data=>{
+                        
+                        console.log(data.args);
+                    })
+                    
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+
+            fun();
+        } else {
+            console.log("Install MetaMask");
+        }
+    </script>
+</body>
+
+</html>

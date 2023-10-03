@@ -14,7 +14,7 @@
 </body>
 <script type="application/javascript">
 // const provider= new ethers.providers.JsonRpcProvider("https://sepolia.infura.io/v3/d6b7c4625a424f51a9d2c7a45d6024b1");
-const walletAdress="0x8809d1ed050c32e6c77f12c12f7fe7d99d8e842c";
+const walletAdress="0x18E9b454428D2b7f5889A5541c9d5E73978BFE99";
 const walletAbi=[
 	{
 		"inputs": [
@@ -107,7 +107,8 @@ const walletAbi=[
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-];    
+]
+	  
 // let functi=async ()=>{
 // 	const walletContract =new ethers.Contract(walletAdress,walletAbi,provider);
 // 	let nameOfMyWallet=await walletContract.name();
@@ -148,7 +149,7 @@ if (window.ethereum) {
       // Get the signer object from the provider
       const signer = provider.getSigner();
       // Create a contract object from the address, ABI, and signer
-      const contract = new ethers.Contract(walletAddress, walletAbi, signer);
+      const contract = new ethers.Contract(walletAdress, walletAbi, signer);
 
       // Call your contract function (setValue in this case)
       await contract.setValue(2);
@@ -157,15 +158,14 @@ if (window.ethereum) {
       console.error("Error:", error);
     }
   };
-
-//   // Invoke the function
-//   walletIntr();
-// } else {
-//   // Handle the case where no Ethereum provider is found
-//   console.error(
-//     "Ethereum provider not found. Make sure MetaMask or a similar provider is installed."
-//   );
-// }
+  // Invoke the function
+  walletIntr();
+} else {
+  // Handle the case where no Ethereum provider is found
+  console.error(
+    "Ethereum provider not found. Make sure MetaMask or a similar provider is installed."
+  );
+}
 
     
    

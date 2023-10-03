@@ -1,0 +1,136 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+        type="application/javascript"></script>
+    <title>Document</title>
+</head>
+<body>
+    <button id="connect">Connect to Wallet</button>
+</body>
+<script>
+    let cmnd=window.ethereum;
+    let contractAddres="0x7B30B0915Be04B6E511593988d83987f203b6B53";
+    let contractAbi=[
+	{
+		"inputs": [],
+		"name": "receiveBalance",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_user",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "sendEthUser",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_num",
+				"type": "uint256"
+			}
+		],
+		"name": "setValue",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "accountBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "contractBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getValue",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+     if(cmnd){
+        let provider= new ethers.providers.Web3Provider(cmnd);
+        let fun=async()=>{
+            try{
+                let req= await provider.send("eth_requestAccounts",[]);
+                let signer= provider.getSigner();
+                let contract = new ethers.Contract(contractAddres,contractAbi,signer);
+                //await contract.receiveBalance({value:ethers.utils.parseEther("0.5")})
+                await contract.sendEthUser("0x14f765d0e817b9b07f802E9104bB09179B98Eb21",ethers.utils.parseEther("0.5"))
+
+                
+            }catch(e){
+                console.log(e);
+            }
+
+        }
+        document.getElementById("connect").addEventListener("click",fun)
+        
+
+     }else{
+        console.log("Install MetaMask")
+     }
+</script>
+</html>

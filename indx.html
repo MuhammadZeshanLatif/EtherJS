@@ -1,0 +1,149 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+</head>
+
+<body>
+
+</body>
+
+<script>
+    
+    let contAddr = "0xE68C6833cd65f0FaFe488C0b4F1E471Dc8560322";
+    let contAbi = [
+        {
+            "inputs": [],
+            "name": "sendEthContract",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_user",
+                    "type": "address"
+                }
+            ],
+            "name": "sendEthUser",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_num",
+                    "type": "uint256"
+                }
+            ],
+            "name": "setValue",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_address",
+                    "type": "address"
+                }
+            ],
+            "name": "accountBalance",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "contractBalance",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getValue",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "name",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ];
+
+
+    let cmnd = window.ethereum;
+    if (cmnd) {
+        let provider = new ethers.providers.Web3Provider(cmnd);
+        let fun = async () => {
+            try {
+                let req = await provider.send("eth_requestAccounts", []);
+                let signer = provider.getSigner();
+                const contract = new ethers.Contract(contAddr, contAbi, signer);
+                 //await contract.sendEthContract({value:ethers.utils.parseEther("1.0")})
+                let bal=await contract.sendEthUser("0xcE2a59bB722c17c555D52dcD8ea40E32e1E6Cd55",{value:ethers.utils.parseEther("1.0")});
+                //let bal=await contract.contractBalance();
+                //console.log(ethers.utils.formatEther(bal));
+
+
+
+            //     console.log(await contract.name())
+            //     let val =await contract.getValue()
+            //     console.log(String(val))
+            //    let balance= await contract.accountBalance("0x722530FB3c3E290F628cDFF79b96aa2120E042D9")
+            //     console.log(ethers.utils.formatEther(balance));
+              //   let setVal=await contract.setValue(5)
+               
+
+            } catch (e) {
+                console.log(e)
+            }
+        }
+        fun();
+    } else {
+        console.log("Install Meta Mask")
+    }
+
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,135 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenMetaMask</title>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+</head>
+
+<body>
+
+</body>
+<script type="module">
+    const walletAdress="0x18E9b454428D2b7f5889A5541c9d5E73978BFE99";
+const walletAbi=[
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "accountBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "contractBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getValue",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "sendEthContract",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_user",
+				"type": "address"
+			}
+		],
+		"name": "sendEthUser",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_num",
+				"type": "uint256"
+			}
+		],
+		"name": "setValue",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]
+    let openMetaMask = window.ethereum;
+    if (openMetaMask) {
+        const providers = new ethers.providers.Web3Provider(openMetaMask);
+
+        let fun = async () => {	
+            try {
+
+                let request = await providers.send("eth_requestAccounts", []);
+               // const signer = providers.getSigner();
+                // let contract= new ethers.Contract(walletAdress,walletAbi,signer);
+                // // let setVal = await contract.sendEthContract({value:ethers.utils.parseEther("0.01")});
+                // let setVal = await contract.contractBalance();
+                // console.log(String(setVal));
+            }
+
+            catch (e) {
+                console.log(e)
+            }
+        }
+        fun();
+    }
+    else {
+        console.log("Please Install MataMask")
+    }
+
+</script>
+
+</html>
