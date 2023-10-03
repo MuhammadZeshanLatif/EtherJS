@@ -7,12 +7,33 @@
     <title>Document</title>
 </head>
 <body>
+	<h1 id="name"></h1>
     <button id="connect">Connect to Wallet</button>
+	<div>
+		<br><br>
+		<input type="text" name="" id="amount">
+		<button id="rcvEth">Receive Ethers</button>
+		<br><br>
+		<button id="shwContractBalance">Show Contract Balance</button>
+		<h3 id="contractBlnc"></h3>
+		<br>
+	</div>
+	<div>
+		<label for="">Enter Amount :</label>
+		<input type="text" name="" id="amounts">
+		<br><br><label for="">Enter Address :</label>
+		<input type="text" name="" id="address">
+		<br><br>
+		<button id="userEt">Sent Eth To User</button>
+	</div>
+	
+
+    
 </body>
 <script>
     let cmnd=window.ethereum;
-    let contractAddres="0x7B30B0915Be04B6E511593988d83987f203b6B53";
-    let contractAbi=[
+	let contractAddres="0xBd3aaE1994A80aC7c32234126C688B34abf381D2";
+	let contractAbi=[
 	{
 		"inputs": [],
 		"name": "receiveBalance",
@@ -112,22 +133,49 @@
 ]
      if(cmnd){
         let provider= new ethers.providers.Web3Provider(cmnd);
-        let fun=async()=>{
+		let signer= provider.getSigner(); 
+		let contract = new ethers.Contract(contractAddres,contractAbi,signer); 
+		let amount=document.getElementById("amount");
+		let connect=document.getElementById("connect");
+		let rcvEth=document.getElementById("rcvEth");
+		let contractBlnc=document.getElementById("contractBlnc");
+		let shwContractBalance=document.getElementById("shwContractBalance");
+		let name=document.getElementById("name");
+		let userAmount=document.getElementById("amounts");
+		let userAddress=document.getElementById("address");
+		let userEt=document.getElementById("userEt");
+        let Connect=async()=>{
             try{
-                let req= await provider.send("eth_requestAccounts",[]);
-                let signer= provider.getSigner();
-                let contract = new ethers.Contract(contractAddres,contractAbi,signer);
-                //await contract.receiveBalance({value:ethers.utils.parseEther("0.5")})
-                await contract.sendEthUser("0x14f765d0e817b9b07f802E9104bB09179B98Eb21",ethers.utils.parseEther("0.5"))
-
-                
+                let req= await provider.send("eth_requestAccounts",[]); 	
+				console.log(nam);
             }catch(e){
                 console.log(e);
             }
 
         }
-        document.getElementById("connect").addEventListener("click",fun)
-        
+		let contractName=async()=>{ 
+                let names= await contract.name();	
+				name.innerHTML=`Contract Name: ${names}`;
+
+        }
+		contractName(); 
+		let contractBalance=async()=>{
+			let balance=await contract.contractBalance();
+			contractBlnc.innerHTML=`Contract Balance :${ethers.utils.formatEther(balance)} Eth`;
+		}
+		let receiveEth=async()=>{
+			await contract.receiveBalance({value:ethers.utils.parseEther(amount.value)});
+			contractBalance();
+		} 
+		let senEthToUser=async()=>{
+			console.log(userAmount.value);
+			await contract.sendEthUser(userAddress.value,ethers.utils.parseEther(userAmount.value));
+		} 
+		connect.addEventListener("click",Connect);
+		rcvEth.addEventListener("click",receiveEth);  
+		shwContractBalance.addEventListener("click",contractBalance);
+		userEt.addEventListener("click",senEthToUser); 
+
 
      }else{
         console.log("Install MetaMask")
